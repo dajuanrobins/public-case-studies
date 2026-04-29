@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant Fan
+  participant API
+  participant Payment
+  participant Ticket
+  participant Chain
+  participant Scanner
+
+  Fan->>API: Select tier and buy ticket
+  API->>Payment: Authorize payment
+  Payment-->>API: Payment authorized
+  API->>Ticket: Reserve inventory
+  Ticket->>Chain: Mint ticket
+  Chain-->>Ticket: Mint receipt
+  Ticket-->>Fan: Ticket available in wallet
+  Fan->>Scanner: Present QR/signed proof
+  Scanner->>Ticket: Validate ticket
+  Ticket->>Chain: Verify owner/status if needed
+  Ticket-->>Scanner: Allow and mark redeemed

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenTix Prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <nav class="nav">
+          <div class="brand-mark">OT</div>
+          <div>
+            <p class="eyebrow">OpenTix concept prototype</p>
+            <h1>Verifiable digital tickets for events, seasons, collectibles, and resale.</h1>
+          </div>
+          <button id="connectWallet" class="button button-dark">Connect Wallet</button>
+        </nav>
+
+        <section class="hero-grid">
+          <div class="hero-copy">
+            <p>
+              OpenTix lets organizers issue programmable digital tickets with ownership receipts,
+              resale rules, premium content unlocks, and event-level collectibles.
+            </p>
+            <div class="hero-actions">
+              <button class="button button-dark" data-tab-target="marketplace">Explore tickets</button>
+              <button class="button button-light" data-tab-target="organizer">Organizer console</button>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="stat-card">
+              <span>volume</span>
+              <strong>$74,920</strong>
+              <small>primary + resale transactions</small>
+            </div>
+            <div class="stat-card">
+              <span>Tickets minted</span>
+              <strong id="ticketsMintedMetric">2,384</strong>
+              <small>across 3 demo events</small>
+            </div>
+            <div class="stat-card">
+              <span>Royalty policy</span>
+              <strong>5–10%</strong>
+              <small>paid to organizer on resale</small>
+            </div>
+          </div>
+        </section>
+      </header>
+
+      <main>
+        <section class="tabs" aria-label="Prototype sections">
+          <button class="tab active" data-tab="marketplace">Fan Marketplace</button>
+          <button class="tab" data-tab="organizer">Organizer Console</button>
+          <button class="tab" data-tab="wallet">Wallet + Ticket</button>
+          <button class="tab" data-tab="ledger">Ledger Timeline</button>
+        </section>
+
+        <section id="marketplace" class="tab-panel active">
+          <div class="section-heading">
+            <p class="eyebrow">Fan experience</p>
+            <h2>Select an event and mint a verifiable ticket.</h2>
+          </div>
+          <div class="market-grid">
+            <aside class="event-list" id="eventList"></aside>
+            <section class="detail-card">
+              <div id="eventDetail"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="organizer" class="tab-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Organizer experience</p>
+            <h2>Configure ticket art, supply, benefits, and resale controls.</h2>
+          </div>
+          <div class="organizer-grid">
+            <section class="detail-card">
+              <h3>Ticket designer</h3>
+              <label class="field-label">Visual template</label>
+              <div class="segmented" id="templateSelector">
+                <button class="segment active" data-template="Monochrome Luxe">Monochrome Luxe</button>
+                <button class="segment" data-template="Season Pass">Season Pass</button>
+                <button class="segment" data-template="Premium Collectible">Premium Collectible</button>
+              </div>
+
+              <label class="field-label">Allowed resale markup</label>
+              <input id="markupRange" type="range" min="0" max="100" value="35" />
+              <p class="muted"><span id="markupValue">35</span>% maximum markup above original face value.</p>
+
+              <label class="check-row">
+                <input id="contentUnlock" type="checkbox" checked />
+                Include premium downloadable content unlock
+              </label>
+              <label class="check-row">
+                <input id="royaltyToggle" type="checkbox" checked />
+                Enforce organizer resale royalty
+              </label>
+            </section>
+
+            <section class="ticket-preview-card">
+              <div id="ticketPreview"></div>
+            </section>
+
+            <section class="detail-card">
+              <h3>Season listing concept</h3>
+              <p class="muted">
+                A team or venue can publish a season catalog, where one organizer owns many event listings and fans can buy individual tickets, bundles, or full-season passes.
+              </p>
+              <div id="seasonList" class="season-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="wallet" class="tab-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Ownership experience</p>
+            <h2>Every ticket has a wallet owner, QR verifier, and transfer policy.</h2>
+          </div>
+          <div class="wallet-grid">
+            <section class="ticket-preview-card large">
+              <div id="walletTicket"></div>
+            </section>
+            <section class="detail-card">
+              <h3>Transfer and resale simulation</h3>
+              <div id="ownershipPanel"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="ledger" class="tab-panel">
+          <div class="section-heading">
+            <p class="eyebrow">System evidence</p>
+            <h2>Ledger activity generated by the prototype.</h2>
+          </div>
+          <section class="detail-card">
+            <div id="ledgerLog" class="ledger-log"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

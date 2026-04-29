@@ -1,0 +1,216 @@
+openapi: 3.0.3
+info:
+  title: OpenTix Prototype API
+  version: 0.1.0
+  description: Example API shape for the OpenTix concept prototype.
+servers:
+  - url: https://api.opentix.example.com
+paths:
+  /events:
+    get:
+      summary: List published events
+      responses:
+        '200':
+          description: Published events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Event'
+    post:
+      summary: Create an event
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEventRequest'
+      responses:
+        '201':
+          description: Event created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+  /events/{eventId}/publish:
+    post:
+      summary: Publish an event
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/EventId'
+      responses:
+        '200':
+          description: Event published
+  /events/{eventId}/tiers:
+    post:
+      summary: Create a ticket tier
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/EventId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTicketTierRequest'
+      responses:
+        '201':
+          description: Tier created
+  /purchases:
+    post:
+      summary: Buy a ticket
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePurchaseRequest'
+      responses:
+        '202':
+          description: Purchase accepted and ticket mint is pending
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Purchase'
+  /wallet/tickets:
+    get:
+      summary: List tickets for the authenticated wallet owner
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Wallet tickets
+  /tickets/{ticketId}/transfer:
+    post:
+      summary: Transfer a ticket under its policy
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TicketId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferTicketRequest'
+      responses:
+        '202':
+          description: Transfer accepted
+  /scanner/validate:
+    post:
+      summary: Validate and redeem a ticket at venue entry
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScannerValidateRequest'
+      responses:
+        '200':
+          description: Scanner decision
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScannerDecision'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    EventId:
+      name: eventId
+      in: path
+      required: true
+      schema:
+        type: string
+    TicketId:
+      name: ticketId
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    Event:
+      type: object
+      properties:
+        id: { type: string }
+        organization_id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        venue_name: { type: string }
+        starts_at: { type: string, format: date-time }
+        status: { type: string, enum: [draft, published, closed, canceled] }
+    CreateEventRequest:
+      type: object
+      required: [organization_id, name, starts_at]
+      properties:
+        organization_id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        venue_name: { type: string }
+        starts_at: { type: string, format: date-time }
+    CreateTicketTierRequest:
+      type: object
+      required: [name, price_cents, supply_cap]
+      properties:
+        name: { type: string }
+        price_cents: { type: integer }
+        currency: { type: string, default: USD }
+        supply_cap: { type: integer }
+        resale_rule_id: { type: string }
+    CreatePurchaseRequest:
+      type: object
+      required: [event_id, tier_id, quantity, buyer_wallet]
+      properties:
+        event_id: { type: string }
+        tier_id: { type: string }
+        quantity: { type: integer, minimum: 1 }
+        buyer_wallet: { type: string }
+        payment_method_id: { type: string }
+    Purchase:
+      type: object
+      properties:
+        purchase_id: { type: string }
+        status: { type: string, enum: [payment_pending, mint_pending, issued, failed] }
+        ticket_ids:
+          type: array
+          items: { type: string }
+    TransferTicketRequest:
+      type: object
+      required: [to_wallet]
+      properties:
+        to_wallet: { type: string }
+        resale_price_cents: { type: integer }
+    ScannerValidateRequest:
+      type: object
+      required: [event_id, ticket_id, scanner_device_id, presentation_signature]
+      properties:
+        event_id: { type: string }
+        ticket_id: { type: string }
+        scanner_device_id: { type: string }
+        presentation_signature: { type: string }
+    ScannerDecision:
+      type: object
+      properties:
+        decision: { type: string, enum: [allow, deny, review] }
+        reason: { type: string }
+        ticket_status: { type: string }
+        receipt_id: { type: string }

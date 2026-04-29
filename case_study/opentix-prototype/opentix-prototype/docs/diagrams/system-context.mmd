@@ -1,0 +1,20 @@
+flowchart TB
+  Fan[Fan App] --> API[OpenTix API]
+  Organizer[Organizer Console] --> API
+  Scanner[Venue Scanner] --> API
+  API --> Identity[Identity + Wallet]
+  API --> Events[Event Service]
+  API --> Tickets[Ticket Service]
+  API --> Payments[Payment Service]
+  API --> Content[Content Service]
+  Tickets --> Adapter[Blockchain Adapter]
+  Adapter --> Soroban[Soroban Contracts]
+  Events --> DB[(PostgreSQL)]
+  Tickets --> DB
+  Payments --> PSP[Payment Provider]
+  Content --> Storage[(Object Storage)]
+  Events --> Bus[(Kafka Event Bus)]
+  Tickets --> Bus
+  Payments --> Bus
+  Bus --> Analytics[Analytics]
+  Bus --> Notify[Notifications]
