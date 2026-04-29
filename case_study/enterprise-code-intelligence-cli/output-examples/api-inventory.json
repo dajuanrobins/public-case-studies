@@ -1,0 +1,48 @@
+{
+  "sourceRoot": "./samples/SampleEnterpriseApp",
+  "generatedAtUtc": "2026-04-29T00:00:00+00:00",
+  "endpoints": [
+    {
+      "controller": "LoanApplicationsController",
+      "methodName": "GetById",
+      "httpVerb": "GET",
+      "route": "/api/loan-applications/{id}",
+      "returnType": "ActionResult<LoanApplicationDto>",
+      "parameters": [
+        "Guid id"
+      ],
+      "sourceFile": "Controllers/LoanApplicationsController.cs"
+    },
+    {
+      "controller": "LoanApplicationsController",
+      "methodName": "Create",
+      "httpVerb": "POST",
+      "route": "/api/loan-applications",
+      "returnType": "ActionResult<LoanApplicationDto>",
+      "parameters": [
+        "CreateLoanApplicationRequest request"
+      ],
+      "sourceFile": "Controllers/LoanApplicationsController.cs"
+    }
+  ],
+  "functions": [
+    {
+      "functionName": "DocumentRetentionSweep",
+      "trigger": "timer",
+      "methodName": "Run",
+      "sourceFile": "Functions/DocumentRetentionFunction.cs"
+    }
+  ],
+  "services": [
+    {
+      "className": "LoanApplicationService",
+      "publicMethods": [
+        "ApproveAsync",
+        "RejectAsync",
+        "SubmitAsync"
+      ],
+      "sourceFile": "LoanApplicationService.cs"
+    }
+  ],
+  "totalItems": 4
+}

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Enterprise Code Intelligence CLI — Case Study</title>
+<style>:root {
+  --bg: #f7f7f5;
+  --paper: #ffffff;
+  --ink: #171717;
+  --muted: #5f5f5f;
+  --line: #d8d8d2;
+  --soft: #eeeeeb;
+  --code: #111111;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.55;
+}
+.page {
+  max-width: 1040px;
+  margin: 48px auto;
+  padding: 48px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.08);
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+h1 {
+  margin: 10px 0 8px;
+  font-size: 44px;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+h2 {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+h3 { margin-top: 28px; font-size: 16px; }
+p { max-width: 820px; }
+.lede {
+  font-size: 18px;
+  color: #303030;
+  max-width: 880px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 28px 0;
+}
+.card {
+  border: 1px solid var(--line);
+  background: var(--soft);
+  padding: 18px;
+  min-height: 128px;
+}
+.card strong { display: block; margin-bottom: 8px; }
+pre {
+  padding: 18px;
+  overflow-x: auto;
+  background: var(--code);
+  color: #f1f1f1;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+}
+th, td {
+  border: 1px solid var(--line);
+  text-align: left;
+  padding: 12px;
+  vertical-align: top;
+}
+th {
+  background: var(--soft);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.note {
+  border-left: 4px solid var(--ink);
+  padding: 12px 18px;
+  background: var(--soft);
+  color: #252525;
+}
+.footer {
+  margin-top: 48px;
+  color: var(--muted);
+  font-size: 12px;
+}
+@media (max-width: 800px) {
+  .page { margin: 0; padding: 28px; }
+  .grid { grid-template-columns: 1fr; }
+  h1 { font-size: 34px; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="eyebrow">Technical Case Study · .NET Developer Tooling</div>
+  <h1>Enterprise Code Intelligence CLI</h1>
+  <p class="lede">A compact engineering study in turning enterprise source code into structured, reviewable documentation artifacts for onboarding, modernization, and operational clarity.</p>
+  <section class="grid">
+    <div class="card"><strong>Problem</strong>Enterprise codebases become hard to reason about when APIs, functions, jobs, and services evolve without a living inventory.</div>
+    <div class="card"><strong>Approach</strong>Scan source code, normalize metadata into a stable model, and export that model into JSON, Markdown, CSV, and HTML.</div>
+    <div class="card"><strong>Outcome</strong>A reviewable documentation pipeline that demonstrates architecture discipline, practical tooling, and maintainable system boundaries.</div>
+  </section>
+  <h2>Architecture</h2>
+  <pre><code>Source Code → Scanner → Inventory Model → Exporters → Documentation Artifacts</code></pre>
+  <h2>Distinguished-engineer notes</h2>
+  <p>The important decision is not the scanner implementation. The important decision is the boundary around the inventory model. Once that model is stable, the scanner can become more sophisticated without disrupting downstream consumers.</p>
+  <h2>Evaluation criteria</h2>
+  <table>
+    <tr><th>Criterion</th><th>Reason</th></tr>
+    <tr><td>Deterministic output</td><td>Generated docs must be diffable and suitable for review.</td></tr>
+    <tr><td>Portable metadata</td><td>JSON should be usable by other tools, not just this CLI.</td></tr>
+    <tr><td>Graceful degradation</td><td>Legacy enterprise code is inconsistent; the tool should still return partial value.</td></tr>
+  </table>
+  <p class="note">This repository is intentionally compact and sanitized. It demonstrates the engineering pattern without exposing proprietary implementation details.</p>
+  <div class="footer">Monochrome technical brief · public showcase repository</div>
+</main>
+</body>
+</html>

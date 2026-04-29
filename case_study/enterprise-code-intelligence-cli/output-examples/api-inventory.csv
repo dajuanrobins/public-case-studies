@@ -1,0 +1,5 @@
+kind,name,verb_or_trigger,route_or_methods,source_file
+endpoint,GetById,GET,/api/loan-applications/{id},Controllers/LoanApplicationsController.cs
+endpoint,Create,POST,/api/loan-applications,Controllers/LoanApplicationsController.cs
+function,DocumentRetentionSweep,timer,,Functions/DocumentRetentionFunction.cs
+service,LoanApplicationService,,ApproveAsync;RejectAsync;SubmitAsync,LoanApplicationService.cs

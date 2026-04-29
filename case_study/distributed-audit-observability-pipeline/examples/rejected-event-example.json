@@ -1,0 +1,17 @@
+{
+  "_comment": "This illustrates what a producer receives when an event fails pipeline validation. The original event is returned alongside the structured error so the producer can re-queue or alert without losing the source data.",
+  "rejected_event": {
+    "event_id": "",
+    "timestamp": "2026-04-28T14:10:00Z",
+    "service": "notification-worker",
+    "actor_id": "system",
+    "action": "send_alert",
+    "resource": "channel:pagerduty",
+    "result": "succeeded",
+    "severity": "warning",
+    "attributes": {
+      "recipient": "on-call-team"
+    }
+  },
+  "error": "event_id is required"
+}

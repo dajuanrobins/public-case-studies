@@ -1,0 +1,47 @@
+[
+  {
+    "event_id": "evt-001",
+    "timestamp": "2026-04-28T14:05:00Z",
+    "service": "orders-api",
+    "actor_id": "user-123",
+    "action": "create_order",
+    "resource": "order:7842",
+    "result": "succeeded",
+    "severity": "info",
+    "correlation_id": "trace-4f2a1b",
+    "attributes": {
+      "request_id": "req-abc",
+      "payment_token": "tok_live_example"
+    }
+  },
+  {
+    "event_id": "evt-002",
+    "timestamp": "2026-04-28T14:07:00Z",
+    "service": "identity-service",
+    "actor_id": "user-999",
+    "action": "admin_access_check",
+    "resource": "admin-panel",
+    "result": "denied",
+    "severity": "warning",
+    "correlation_id": "trace-4f2a1b",
+    "attributes": {
+      "ip_address": "10.0.0.42",
+      "reason": "missing_required_role"
+    }
+  },
+  {
+    "event_id": "evt-003",
+    "timestamp": "2026-04-28T14:08:00Z",
+    "service": "billing-worker",
+    "actor_id": null,
+    "action": "settlement_job",
+    "resource": "batch:2026-04-28",
+    "result": "failed",
+    "severity": "critical",
+    "attributes": {
+      "retry_count": 3,
+      "error_code": "UPSTREAM_TIMEOUT",
+      "api_key": "private-key-example"
+    }
+  }
+]
